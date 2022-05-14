@@ -9,7 +9,7 @@ export default defineConfig({
   root: "./src",
   build: {
     // root (= ./src) から見た相対パスで指定
-    outDir: "../public",
+    outDir: "../docs",
     emptyOutDir: true,
   },
 });
