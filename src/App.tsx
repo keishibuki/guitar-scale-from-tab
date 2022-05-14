@@ -1,5 +1,5 @@
 import { useState, createContext, SetStateAction, Dispatch } from 'react'
-import { Container, Stack, Heading } from "@chakra-ui/react"
+import { Container, Grid, GridItem, Heading } from "@chakra-ui/react"
 import './App.css'
 import FretFormControl from './components/FretFormControl';
 import StringFormControl from './components/StringFormControl';
@@ -26,10 +26,10 @@ function App() {
             <Heading as="h1" size="md" mb={5}>
               ギターのタブ譜からドレミ変換
             </Heading>
-            <Stack spacing={3}>
+            <Grid templateColumns='repeat(2, 1fr)' gap={4}>
               <FretFormControl />
               <StringFormControl />
-            </Stack>
+            </Grid>
             <Answer />
             <GuitarTable />
           </Container>
