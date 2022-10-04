@@ -1,11 +1,15 @@
 import { FC, useContext } from "react";
 
-import { FretContext, StringContext } from "../App";
+import { FretContext, StringContext, TuningContext } from "../App";
+import makeValues from "../resource";
 import resource from '../resource';
+import TuningFormControl from "./TuningFormControl";
 
 const GuitarTable: FC = () => {
   const { fret } = useContext(FretContext);
   const { string } = useContext(StringContext);
+  const { tuning } = useContext(TuningContext);
+  const data = makeValues(tuning);
 
   const style = {
     color: '#fff',
@@ -19,18 +23,23 @@ const GuitarTable: FC = () => {
         <thead>
           <tr>
             <th>フレット番号</th>
-            {resource[0].map((_, index) => {
+            {tuning.map((_, index) => {
               const stringNumber = 6 - index;
-              return <th key={stringNumber} style={stringNumber === Number(string) ? style : undefined}>{stringNumber}弦</th>;
+              return (
+                <th key={stringNumber} style={stringNumber === Number(string) ? style : undefined}>
+                  <span>{stringNumber}弦</span>
+                  <TuningFormControl stringIndex={index} />
+                </th>
+              );
             })}
           </tr>
         </thead>
         <tbody>
-          {resource.map((strings, index) => {
+          {data.map((strings, index) => {
             return (
               <tr key={`fret-${index}`}>
                 <th style={index === Number(fret) ? style : undefined}>{index === 0 ? '開放弦' : index}</th>
-                {[...strings].reverse().map((scale, idx) => {
+                {[...strings].map((scale, idx) => {
                   const stringNumber = 6 - idx;
                   return (
                     <td key={`fret=${index}-string-${idx}`} style={index === Number(fret) && stringNumber === Number(string) ? style : undefined}>{scale}</td>
